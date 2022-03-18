@@ -4,10 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ECRGui"
-        mc:Ignorable="d"
+        xmlns:model="clr-namespace:ECRGui.Model"
         Title="MainWindow" Height="450" Width="800">
+    
+    <Window.Resources>  
+        <model:EcrModel x:Key="EcrModelKey" ></model:EcrModel>
+        <model:PartModel x:Key="PartModelKey" ></model:PartModel>
+        <model:ChangeModel x:Key="ChangeModelKey" ></model:ChangeModel>
+    </Window.Resources> 
+    
     <Border>
-    <Grid Background="White" Margin="5">
+    <Grid Background="White" Margin="0">
         
         <Grid.Resources >
             <Style TargetType="Border" >
@@ -16,52 +23,79 @@
         </Grid.Resources>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="22" />
+            <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
         
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <MenuItem Header="_File">
+                        <MenuItem Header="_New" />
+                        <MenuItem Header="_Open" />
+                        <MenuItem Header="_Save" />
+                        <Separator />
+                        <MenuItem Header="_Exit" />
+            </MenuItem>
+        </Menu>
         
-        <Border Grid.Row="0" Grid.Column="1" BorderBrush="{x:Null}" Height="50">
+        <Border Grid.Row="1" Grid.Column="1" 
+                BorderBrush="{x:Null}" 
+                Height="50" 
+                DataContext="{Binding Source={StaticResource EcrModelKey}}">
             <TextBlock FontSize="25" 
-                       VerticalAlignment="Center">
-                <Bold>ECR REGISTER</Bold>
+                       VerticalAlignment="Center"
+                       Text="{Binding Path=Number}">
             </TextBlock>
         </Border>
         
-        <Border Grid.Row="1" Grid.Column="0">
+        <Border Grid.Row="1" Grid.Column="2" BorderBrush="{x:Null}" Height="50">
+            <TextBlock FontSize="25" 
+                       VerticalAlignment="Center">
+                Status
+            </TextBlock>
+        </Border>
+        
+        <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="3">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 
-                <Border Grid.Row="0" Grid.Column="0">
-                    <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                        <Button Grid.Row="0" Margin="2">Create</Button>
-                        <Button Grid.Row="1" Margin="2">Read</Button>
-                        <Button Grid.Row="2" Margin="2">Update</Button>
-                        <Button Grid.Row="3" Margin="2">Delete</Button>
-                    </Grid>
-                </Border>
-                
-                <TextBox Grid.Row="1"></TextBox>
+                <ListView Grid.Row="0">Create New</ListView>
             </Grid>
         </Border>
         
-        <Border Grid.Row="1" Grid.Column="1">
-            <TextBox Grid.Column="1"></TextBox>
+        <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
+                DataContext="{Binding Source={StaticResource EcrModelKey}}">
+            <TabControl Grid.Column="1">
+                <TabItem Header="Summary">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="4*" />
+                            <RowDefinition Height="4*" />
+                            <RowDefinition Height="4*" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="ECR" TextAlignment="Right" Margin="4" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Number}"></TextBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Affected Items"></TabItem>
+                <TabItem Header="Attachments"></TabItem>
+                <TabItem Header="History"></TabItem>
+            </TabControl>
         </Border>
         
     </Grid>

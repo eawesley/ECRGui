@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ECRGui.Model;
 
 namespace ECRGui
 {
@@ -13,5 +14,13 @@ namespace ECRGui
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)    
+        {    
+            base.OnStartup(e);    
+            MainWindow window = new MainWindow();
+            EcrModel vmEcrModel = new EcrModel();
+            window.DataContext = vmEcrModel;
+            //window.Show();
+        }  
     }
 }

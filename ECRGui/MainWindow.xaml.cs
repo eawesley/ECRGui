@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ECRGui.Model;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace ECRGui
 {
@@ -23,6 +26,7 @@ namespace ECRGui
         public MainWindow()
         {
             InitializeComponent();
+            MongoCRUD db = new MongoCRUD("InfluxECR");
         }
     }
 }
